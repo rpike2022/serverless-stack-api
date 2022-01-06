@@ -32,8 +32,8 @@ provider:
       Action: 
         - dynamodb:Scan
         - dynamodb:Query
+        - dynamodb:PutItem
         - dynamodb:GetItem
-        - dynamodb:SetItem
         - dynamodb:UpdateItem
         - dynamodb:DeleteItem
         - dynamodb:DescribeTable
@@ -45,27 +45,32 @@ functions:
       - http:
           path: notes
           method: get
+          authorizer: aws_iam
   create:
     handler: create.main
     events:
       - http:
           path: notes
           method: post
+          authorizer: aws_iam
   delete:
-     handler: delete.main
-     events:
+    handler: delete.main
+    events:
       - http:
-        path: notes/{id}
-        method: delete
+          path: notes/{id}
+          method: delete
+          authorizer: aws_iam
   update:
-     handler: update.main
-     events:
+    handler: update.main
+    events:
       - http:
-        path: notes/{id}
-        method: post
+          path: notes/{id}
+          method: post
+          authorizer: aws_iam
   get:
     handler: get.main
     events:
       - http:
           path: notes/{id}
           method: get
+          authorizer: aws_iam
